@@ -79,7 +79,7 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.grade = traineeArray[3];
     trainee.ranking = traineeArray[4];
     trainee.eliminated = traineeArray[5] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
-    trainee.top7 = traineeArray[5] === 't'; // sets trainee to top 7 if 't' appears in 6th column
+    trainee.top7 = traineeArray[5] === 't'; // sets trainee to top 11 if 't' appears in 6th column
     trainee.id = parseInt(traineeArray[6]) - 1; // trainee id is the original ordering of the trainees in the first csv
     trainee.image =
       trainee.name_romanized.replace(" ", "").replace("-", "") + ".png";
@@ -169,7 +169,7 @@ function populateTable(trainees) {
 function populateTableEntry(trainee) {
   // eliminated will have value "eliminated" only if trainee is eliminated and showEliminated is true, otherwise this is ""
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top7 = (showTop7 && trainee.top7) && "top7";
+  let top7 = (showtop7 && trainee.top7) && "top7";
   const tableEntry = `
   <div class="table__entry ${eliminated}">
     <div class="table__entry-icon">
@@ -232,7 +232,7 @@ function populateRanking() {
 
 function populateRankingEntry(trainee, currRank) {
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top7 = (showTop7 && trainee.top7) && "top7";
+  let top7 = (showtop7 && trainee.top7) && "top7";
   const rankingEntry = `
   <div class="ranking__entry ${eliminated}">
     <div class="ranking__entry-view">
@@ -347,7 +347,7 @@ function removeRankedTrainee(trainee) {
   return false;
 }
 
-const currentURL = "https://sheronimo.github.io/chuang2020";
+const currentURL = "https://luizrbraganca.github.io/Chuang2021-Ranker/";
 // Serializes the ranking into a string and appends that to the current URL
 function generateShareLink() {
   let shareCode = ranking.map(function (trainee) {
