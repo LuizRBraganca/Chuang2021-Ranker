@@ -67,7 +67,7 @@ trainee: {
   image: ...
   selected: false/true // whether user selected them
   eliminated: false/true
-  top7: false/true
+  top11: false/true
 }
 */
 function convertCSVArrayToTraineeData(csvArrays) {
@@ -79,7 +79,7 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.grade = traineeArray[3];
     trainee.ranking = traineeArray[4];
     trainee.eliminated = traineeArray[5] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
-    trainee.top7 = traineeArray[5] === 't'; // sets trainee to top 11 if 't' appears in 6th column
+    trainee.top11 = traineeArray[5] === 't'; // sets trainee to top 11 if 't' appears in 6th column
     trainee.id = parseInt(traineeArray[6]) - 1; // trainee id is the original ordering of the trainees in the first csv
     trainee.image =
       trainee.name_romanized.replace(" ", "").replace("-", "") + ".png";
@@ -169,14 +169,14 @@ function populateTable(trainees) {
 function populateTableEntry(trainee) {
   // eliminated will have value "eliminated" only if trainee is eliminated and showEliminated is true, otherwise this is ""
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top7 = (showtop7 && trainee.top7) && "top7";
+  let top11 = (showtop11 && trainee.top11) && "top11";
   const tableEntry = `
   <div class="table__entry ${eliminated}">
     <div class="table__entry-icon">
       <img class="table__entry-img" src="assets/trainees/${trainee.image}" />
       <div class="table__entry-icon-border ${trainee.grade.toLowerCase()}-rank-border"></div>
       ${
-        top7 ? '<div class="table__entry-icon-crown"></div>' : ''
+        top11 ? '<div class="table__entry-icon-crown"></div>' : ''
       }
       ${
         trainee.selected ? '<img class="table__entry-check" src="assets/check.png"/>' : ""
@@ -232,7 +232,7 @@ function populateRanking() {
 
 function populateRankingEntry(trainee, currRank) {
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top7 = (showtop7 && trainee.top7) && "top7";
+  let top11 = (showtop11 && trainee.top11) && "top11";
   const rankingEntry = `
   <div class="ranking__entry ${eliminated}">
     <div class="ranking__entry-view">
@@ -242,7 +242,7 @@ function populateRankingEntry(trainee, currRank) {
       </div>
       <div class="ranking__entry-icon-badge bg-${trainee.grade.toLowerCase()}">${currRank}</div>
       ${
-        top7 ? '<div class="ranking__entry-icon-crown"></div>' : ''
+        top11 ? '<div class="ranking__entry-icon-crown"></div>' : ''
       }
     </div>
     <div class="ranking__row-text">
@@ -347,7 +347,7 @@ function removeRankedTrainee(trainee) {
   return false;
 }
 
-const currentURL = "https://luizrbraganca.github.io/Chuang2021-Ranker/";
+const currentURL = "https://luizrbraganca.github.io/Chuang2021-Ranker";
 // Serializes the ranking into a string and appends that to the current URL
 function generateShareLink() {
   let shareCode = ranking.map(function (trainee) {
