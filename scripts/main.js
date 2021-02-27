@@ -232,7 +232,7 @@ function populateRanking() {
 
 function populateRankingEntry(trainee, currRank) {
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top11 = (showtop11 && trainee.top11) && "top11";
+  let top11 = (showTop11 && trainee.top11) && "top11";
   const rankingEntry = `
   <div class="ranking__entry ${eliminated}">
     <div class="ranking__entry-view">
